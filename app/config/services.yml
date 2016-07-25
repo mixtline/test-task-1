@@ -1,0 +1,6 @@
+services:
+    app.routing_loader:
+        class: AppBundle\Routing\ExtraLoader
+        arguments: ["@kernel"]
+        tags:
+            - { name: routing.loader }
