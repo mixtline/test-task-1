@@ -25,6 +25,6 @@ services:
 
 3. Extend Loader class
 ```
-
+https://github.com/mixtline/test-task-1/blob/master/src/AppBundle/Routing/ExtraLoader.php
 ```
 
