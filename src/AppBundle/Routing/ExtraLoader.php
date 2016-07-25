@@ -28,7 +28,7 @@ class ExtraLoader extends Loader
 
         $routes = new RouteCollection();
 
-        // берем текущий путь, разделяем его на части и смотрим, чтобы частей было три: /{bundle_name}/{controller}/{action}
+        // get current path, split it and check if there is 3 parts according to rule: {bundle_name}/{controller}/{action}
         $path = trim(Request::createFromGlobals()->getPathInfo(), '/');
         $parts = explode('/', $path);
         if (sizeof($parts) == 2) {
@@ -42,20 +42,20 @@ class ExtraLoader extends Loader
         $controllerName = ucfirst($parts[1]);
         $func = $parts[2];
 
-        // проверяем на наличие бандла
+        // check if the bundle exists
         $bundles = $this->kernel->getBundles();
         if (!isset($bundles[$bundleName])) {
             throw new NotFoundHttpException('No bundle found');
         }
 
-        // смотрим, есть ли такой контроллер
+        // check if the controller exists
         $dir = $bundles[$bundleName]->getPath();
         $file = $dir . DIRECTORY_SEPARATOR . 'Controller' . DIRECTORY_SEPARATOR . $controllerName . 'Controller.php';
         if (!file_exists($file)) {
             throw new NotFoundHttpException('No controller found');
         }
 
-        // смотрим, есть ли такой экшен
+        // check if the action exists
         $content = file_get_contents($file);
         if (!preg_match('/function\s+'.$func.'Action\s*\(/i', $content)) {
             throw new NotFoundHttpException('No action found');
